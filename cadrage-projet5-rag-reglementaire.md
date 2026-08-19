@@ -16,9 +16,9 @@
 |---|---|---|---|
 | Règlement (UE) 2021/1060 | UE | PDF/HTML | Texte juridique stable, articles numérotés |
 | Règlement (UE) 2021/1057 (FSE+) | UE | PDF/HTML | Complète le précédent |
-| Décret n° 2022-608 | National | Légifrance | Règles nationales d'éligibilité |
+| Décret n° 2022-608 | National | PDF | Règles nationales d'éligibilité — PDF officiel disponible sur Légifrance (262 Ko, 10 articles + annexe), mais Légifrance bloque le scraping automatisé (Cloudflare) : téléchargement manuel requis |
 | Guide administratif et financier FSE+ 2021-2027 | National | PDF | Mis à jour régulièrement (dernière maj identifiée : juin 2026) – prévoir un mécanisme de rafraîchissement |
-| Guide méthodologique régional (ex. IDF ou Nouvelle-Aquitaine) | Régional | PDF | Décline les règles générales en critères concrets |
+| Guide du porteur de projet et du bénéficiaire — Centre-Val de Loire | Régional | PDF | Décline les règles générales en critères concrets, organisé en 10 "FICHE N°X" — choisi le 2026-08-19 (cadrage laissait IDF ou Nouvelle-Aquitaine à titre d'exemple ; IDF puis Nouvelle-Aquitaine envisagés le même jour avant Centre-Val de Loire) ; source : europeocentre-valdeloire.eu |
 | Guide ANCT instruments financiers | National | PDF | Conçu pour auditeurs et gestionnaires – vocabulaire proche du métier cible |
 
 **Point d'attention** : corpus hétérogène (texte juridique dense vs. guides pédagogiques) – la stratégie de découpage doit s'adapter au type de document plutôt qu'être uniforme.
