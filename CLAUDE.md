@@ -13,14 +13,15 @@ cadrage évolue.
 
 ## État actuel
 
-Cadrage et choix de stack terminés (voir [ADR 0001](docs/decisions/0001-stack-technique-v1.md)
-— pas de framework RAG, Qdrant Cloud, pdfplumber, Mistral pour embeddings et
-génération, Streamlit sur Hugging Face Spaces). Extraction, chunking (voir
-[ADR 0002](docs/decisions/0002-strategie-chunking.md)), indexation (278
-chunks dans Qdrant Cloud) et retrieval terminés — rappel 100% sur le jeu
-de questions de référence (`tests/data/reference_questions.py`).
-Prochaine étape : génération. Suivi détaillé des grandes étapes
-(cochables) : [docs/roadmap.md](docs/roadmap.md).
+Pipeline RAG complet de bout en bout (voir [ADR 0001](docs/decisions/0001-stack-technique-v1.md)
+et [ADR 0002](docs/decisions/0002-strategie-chunking.md)) : extraction,
+chunking, indexation (278 chunks dans Qdrant Cloud), retrieval (rappel
+100%) et génération (mistral-small-latest). Les deux exigences non
+négociables du cadrage sont vérifiées automatiquement contre le vrai
+modèle : citation exacte (9/9) et refus explicite hors-corpus (4/4) —
+voir [issue #12](https://github.com/benoitdb/assistant-rag-ue/issues/12).
+Prochaine étape : interface Streamlit. Suivi détaillé des grandes
+étapes (cochables) : [docs/roadmap.md](docs/roadmap.md).
 
 **Point de vigilance** : le LLM de génération (Mistral free tier) doit être
 testé en priorité contre les deux exigences non négociables ci-dessous —

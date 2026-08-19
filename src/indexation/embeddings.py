@@ -8,7 +8,7 @@ indexation.
 
 import os
 
-import requests
+from mistral_http import post_with_retry
 
 MISTRAL_EMBED_URL = "https://api.mistral.ai/v1/embeddings"
 MISTRAL_EMBED_MODEL = "mistral-embed"
@@ -29,13 +29,12 @@ def embed_texts(texts: list[str], api_key: str | None = None) -> list[list[float
     vectors: list[list[float]] = []
     for i in range(0, len(texts), BATCH_SIZE):
         batch = texts[i : i + BATCH_SIZE]
-        response = requests.post(
+        response = post_with_retry(
             MISTRAL_EMBED_URL,
             headers=headers,
             json={"model": MISTRAL_EMBED_MODEL, "input": batch},
             timeout=60,
         )
-        response.raise_for_status()
         data = response.json()["data"]
         vectors.extend(item["embedding"] for item in data)
     return vectors

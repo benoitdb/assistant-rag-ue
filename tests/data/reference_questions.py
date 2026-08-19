@@ -22,7 +22,7 @@ REFERENCE_QUESTIONS = [
         "question": "Comment le règlement encadre-t-il les corrections financières appliquées par les États membres ?",
         "document": "reglement_ue_2021_1060",
         "type_unite": "reglement_article",
-        "numero": 104,
+        "numero": 103,
     },
     {
         "question": "Quels sont les principes applicables au dégagement d'office des crédits par la Commission ?",
@@ -66,4 +66,27 @@ REFERENCE_QUESTIONS = [
         "type_unite": "fiche_guide",
         "numero": 6,
     },
+]
+
+# Questions volontairement hors du périmètre V1 (cadrage §1 : "hors périmètre
+# explicite" — FEADER/FEAMPA hors volet cohésion, programmation 2014-2020,
+# doctrine interne non publique), plus un cas totalement étranger au domaine.
+# Sert à vérifier la deuxième exigence non négociable du cadrage (§4) : refus
+# explicite plutôt qu'invention quand le corpus ne couvre pas la question —
+# y compris sur des questions "proches" du corpus (mêmes mots-clés,
+# réglementation européenne) où l'invention serait la plus tentante pour un LLM.
+#
+# Attention en ajoutant une question ici : elle doit être vraiment hors
+# corpus, pas seulement formulée pour l'être. Une première version testait
+# "la procédure interne de contrôle non publique de l'autorité de gestion" en
+# pensant tester la doctrine interne — mais l'article 74 du règlement UE
+# (dans le corpus) décrit précisément les "vérifications de gestion" de
+# l'autorité de gestion, une procédure publique. Le modèle a donc, à raison,
+# répondu à partir de cet article plutôt que de refuser (issue #14) —
+# ce n'était pas un défaut du modèle, la question était mal calée.
+HORS_CORPUS_QUESTIONS = [
+    "Quels sont les taux de soutien du FEADER pour les exploitations agricoles ?",
+    "Quelles étaient les règles d'éligibilité applicables à la programmation 2014-2020 ?",
+    "Quelles consignes internes non publiées la Région Centre-Val de Loire donne-t-elle à ses agents instructeurs pour l'analyse des dossiers FEDER, en dehors du guide du porteur de projet ?",
+    "Quelle est la capitale de la France ?",
 ]

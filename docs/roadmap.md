@@ -41,9 +41,9 @@ GitHub sur `benoitdb/assistant-rag-ue`, pas dupliqué ici.
 
 ## 5. Génération
 
-- [ ] Prompt contraignant la citation exacte (document + article/section)
-- [ ] Gestion explicite du hors-corpus ("je ne sais pas", jamais d'invention)
-- [ ] Test contre les deux exigences non négociables (cadrage §4) — priorité haute, cf. risque noté dans l'ADR 0001 sur la fiabilité du LLM gratuit
+- [x] Prompt contraignant la citation exacte (document + article/section) — `src/generation/generator.py`, mistral-small-latest, libellés de document lisibles ([issue #12](https://github.com/benoitdb/assistant-rag-ue/issues/12))
+- [x] Gestion explicite du hors-corpus ("je ne sais pas", jamais d'invention)
+- [x] Test contre les deux exigences non négociables (cadrage §4) — `tests/test_generation.py` : 9/9 citations correctes, 4/4 refus hors-corpus corrects (risque ADR 0001 pas éliminé mais premier résultat encourageant, cf. issue #12 ; retry sur 429/503 du free tier, issue #13 ; une question hors-corpus mal calée corrigée, issue #14)
 
 ## 6. Interface (Streamlit)
 
@@ -52,9 +52,9 @@ GitHub sur `benoitdb/assistant-rag-ue`, pas dupliqué ici.
 
 ---
 
-**État actuel (2026-08-19)** : étapes 1 à 4 terminées — extraction,
-chunking, indexation (278 chunks dans Qdrant Cloud) et retrieval,
-rappel mesuré à 100% sur le jeu de questions de référence, 39 tests au
-vert. Prochaine étape : génération (étape 5) — priorité haute sur les
-deux exigences non négociables (citation exacte, refus explicite
-hors-corpus), cf. risque noté dans l'ADR 0001.
+**État actuel (2026-08-19)** : étapes 1 à 5 terminées — pipeline RAG
+complet de bout en bout (extraction, chunking, indexation dans Qdrant
+Cloud, retrieval, génération), 43 tests au vert. Les deux exigences non
+négociables du cadrage (citation exacte, refus explicite hors-corpus)
+sont vérifiées automatiquement contre le vrai modèle et corpus — 9/9 et
+4/4. Prochaine étape : interface Streamlit (étape 6).
