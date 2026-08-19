@@ -48,6 +48,16 @@ def test_aucune_ligne_d_en_tete_de_page_dans_le_texte(articles):
         assert "Journal" not in article.texte
 
 
+def test_article_119_s_arrete_avant_les_annexes(articles):
+    """Le règlement enchaîne directement sur ses annexes après l'article
+    119, sans heading "Article X" pour le borner (issue #6) — sans
+    détection du titre "ANNEXE I", l'article 119 engloutirait tout le
+    texte des annexes (~99% de caractères en trop)."""
+    article_119 = next(a for a in articles if a.numero == 119)
+    assert "ANNEXE" not in article_119.texte
+    assert len(article_119.texte) < 1000
+
+
 def test_article_multi_pages_reste_continu(articles):
     """L'article 104 (corrections financières) s'étend sur plusieurs
     pages du PDF (84 à 85) : le texte doit rester continu malgré la

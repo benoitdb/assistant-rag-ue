@@ -14,6 +14,7 @@ import pdfplumber
 
 ARTICLE_FONT = "EUAlbertina-ReguItal"
 ARTICLE_HEADING_RE = re.compile(r"^Articles?\s+(premier|\d+)$")
+ANNEXE_HEADING_RE = re.compile(r"^ANNEXE\s+([IVXLCM]+)$")
 
 
 @dataclass
@@ -98,6 +99,26 @@ def _is_header_noise(line_text: str) -> bool:
     return "Journal" in line_text
 
 
+def _find_first_annexe_heading(pdf: pdfplumber.PDF) -> tuple[int, float] | None:
+    """Position (page, top) du titre "ANNEXE <romain>" qui suit l'article 119.
+
+    Le règlement enchaîne directement sur ses annexes après le dernier
+    article ("Entrée en vigueur"), sans heading "Article X" pour le
+    borner — sans cette détection, l'article 119 engloutirait tout le
+    texte des annexes (déjà extrait séparément, voir `annexes.py` et
+    `rotated_tables.py`), soit ~99% de caractères en trop
+    (issue #6 sur benoitdb/assistant-rag-ue). Seule la première annexe
+    importe ici : elle est toujours en texte droit dans ce document
+    (contrairement à certaines annexes suivantes, parfois pivotées à
+    90°), donc pas besoin de gérer le cas pivoté pour cette détection.
+    """
+    for page_index, page in enumerate(pdf.pages):
+        for top, text, _ in group_words_by_line(page):
+            if ANNEXE_HEADING_RE.match(text.strip()):
+                return (page_index, top)
+    return None
+
+
 def _collect_lines_between(
     pdf: pdfplumber.PDF, start: ArticleHeading, end: ArticleHeading | None
 ) -> list[tuple[int, float, str, set]]:
@@ -128,9 +149,14 @@ def extract_articles(pdf_path: str) -> list[Article]:
     """
     with pdfplumber.open(pdf_path) as pdf:
         headings = find_article_headings(pdf)
+        annexe_start = _find_first_annexe_heading(pdf)
         articles = []
         for i, heading in enumerate(headings):
             next_heading = headings[i + 1] if i + 1 < len(headings) else None
+            if next_heading is None and annexe_start is not None:
+                next_heading = ArticleHeading(
+                    page=annexe_start[0], top=annexe_start[1], numero=-1
+                )
             lines = _collect_lines_between(pdf, heading, next_heading)
 
             # la ligne "Article X" elle-même est la première ligne collectée
