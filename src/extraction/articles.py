@@ -32,7 +32,7 @@ class Article:
     page_debut: int
 
 
-def _group_words_by_line(page):
+def group_words_by_line(page):
     """Regroupe les mots d'une page par ligne (position verticale arrondie).
 
     Retourne une liste de (top, texte_ligne, {polices utilisées}) triée
@@ -62,7 +62,7 @@ def find_article_headings(pdf: pdfplumber.PDF) -> list[ArticleHeading]:
     """
     headings = []
     for page_index, page in enumerate(pdf.pages):
-        for top, text, fonts in _group_words_by_line(page):
+        for top, text, fonts in group_words_by_line(page):
             match = ARTICLE_HEADING_RE.match(text.strip())
             if not match:
                 continue
@@ -94,7 +94,7 @@ def _collect_lines_between(
     collected = []
     for page_index in range(start.page, end_page + 1):
         page = pdf.pages[page_index]
-        for top, text, fonts in _group_words_by_line(page):
+        for top, text, fonts in group_words_by_line(page):
             if page_index == start.page and top < start.top:
                 continue
             if page_index == end_page and top >= end_top:

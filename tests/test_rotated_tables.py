@@ -9,9 +9,9 @@ from extraction.rotated_tables import (
 )
 
 # Page d'index pdfplumber 165 (numérotée "L 231/324" dans le JO) : une
-# page de l'Annexe VI, tableau des conditions thématiques favorisantes,
+# page de l'Annexe IV, tableau des conditions thématiques favorisantes,
 # entièrement en texte pivoté à 90° (voir issue #2).
-ANNEXE_VI_PAGE = 165
+ANNEXE_IV_PAGE = 165
 
 # Page d'index 21 : corps de l'article premier, texte droit normal.
 ARTICLE_PAGE = 21
@@ -23,8 +23,8 @@ def pdf():
         yield opened
 
 
-def test_annexe_vi_page_est_detectee_comme_pivotee(pdf):
-    assert is_rotated_page(pdf.pages[ANNEXE_VI_PAGE]) is True
+def test_annexe_iv_page_est_detectee_comme_pivotee(pdf):
+    assert is_rotated_page(pdf.pages[ANNEXE_IV_PAGE]) is True
 
 
 def test_page_article_n_est_pas_detectee_comme_pivotee(pdf):
@@ -35,8 +35,8 @@ def test_reconstruction_cellule_vide():
     assert reconstruct_rotated_cell([]) == ""
 
 
-def test_tables_de_l_annexe_vi_sont_lisibles_apres_reconstruction(pdf):
-    page = pdf.pages[ANNEXE_VI_PAGE]
+def test_tables_de_l_annexe_iv_sont_lisibles_apres_reconstruction(pdf):
+    page = pdf.pages[ANNEXE_IV_PAGE]
     tables = extract_rotated_tables_from_page(page)
 
     assert len(tables) >= 1
