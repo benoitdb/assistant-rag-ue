@@ -17,8 +17,8 @@ GitHub sur `benoitdb/assistant-rag-ue`, pas dupliqué ici.
 - [x] Récupérer le Règlement (UE) 2021/1060 en local (source EUR-Lex, committé dans `docs/sources/`)
 - [x] Valider la stratégie de détection des articles (police italique 9.6, plus robuste qu'une regex texte — [issue #1](https://github.com/benoitdb/assistant-rag-ue/issues/1))
 - [x] Extraction des 119 articles (`src/extraction/articles.py`, 5 tests, corps multi-pages géré, en-têtes de page filtrés)
-- [x] Valider la reconstruction du texte pivoté des annexes (cellule par cellule via `find_tables()` + tri par police/rotation — [issue #2](https://github.com/benoitdb/assistant-rag-ue/issues/2))
-- [ ] Intégrer la reconstruction des annexes dans un module testé (prototype validé, pas encore en code réutilisable)
+- [x] Valider et intégrer la reconstruction du texte pivoté des annexes (`src/extraction/rotated_tables.py`, 4 tests — cellule par cellule via `find_tables()` + tri par police/rotation, [issue #2](https://github.com/benoitdb/assistant-rag-ue/issues/2))
+- [ ] Attribuer chaque tableau reconstruit à son annexe/article précis ([issue #3](https://github.com/benoitdb/assistant-rag-ue/issues/3)) — bloquant pour l'exigence de citation exacte (cadrage §4)
 - [ ] Étendre au Décret n° 2022-608 et au guide régional choisi (corpus hétérogène, cf. cadrage §2)
 
 ## 2. Chunking
