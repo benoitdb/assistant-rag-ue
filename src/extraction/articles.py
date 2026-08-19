@@ -2,9 +2,9 @@
 
 Stratégie validée par exploration (voir issue #1 sur benoitdb/assistant-rag-ue) :
 les titres "Article X" sont repérables de façon fiable par leur police
-(italique, taille 9.6), pas par une regex sur le texte seul — le texte
-source contient au moins une coquille ("Articles 105" au pluriel) qu'une
-regex stricte manquerait.
+(italique, EUAlbertina-ReguItal), pas par une regex sur le texte seul — le
+texte source contient au moins une coquille ("Articles 105" au pluriel)
+qu'une regex stricte manquerait.
 """
 
 import re
@@ -13,7 +13,6 @@ from dataclasses import dataclass
 import pdfplumber
 
 ARTICLE_FONT = "EUAlbertina-ReguItal"
-ARTICLE_FONT_SIZE = 9.6
 ARTICLE_HEADING_RE = re.compile(r"^Articles?\s+(premier|\d+)$")
 
 
@@ -37,11 +36,26 @@ def group_words_by_line(page):
 
     Retourne une liste de (top, texte_ligne, {polices utilisées}) triée
     par position sur la page.
+
+    Arrondi à l'entier (pas à 0,1 près) : deux polices différentes sur une
+    même ligne visuelle (ex. un marqueur en gras suivi de corps en romain,
+    comme dans le Décret n° 2022-608) peuvent avoir un `top` qui diffère de
+    quelques centièmes — assez pour tomber de part et d'autre d'un seuil
+    d'arrondi à 0,1 et scinder à tort une ligne en deux. L'écart réel entre
+    deux lignes distinctes est de l'ordre de 10pt, très supérieur à cette
+    marge.
+
+    `extra_attrs` demande seulement "fontname", pas "size" : pdfplumber
+    insère une coupure de mot chaque fois qu'un attribut demandé change
+    entre deux caractères adjacents, or un exposant ("1er.") a une taille
+    plus petite que le texte qui l'entoure sans changer de police — inclure
+    "size" scindait ainsi "1er." en trois mots ("1", "er", ".") et cassait
+    la reconstruction de ligne.
     """
-    words = page.extract_words(extra_attrs=["fontname", "size"])
+    words = page.extract_words(extra_attrs=["fontname"])
     lines = {}
     for w in words:
-        key = round(w["top"], 1)
+        key = round(w["top"])
         lines.setdefault(key, []).append(w)
     result = []
     for top, line_words in lines.items():

@@ -19,7 +19,9 @@ GitHub sur `benoitdb/assistant-rag-ue`, pas dupliqué ici.
 - [x] Extraction des 119 articles (`src/extraction/articles.py`, 5 tests, corps multi-pages géré, en-têtes de page filtrés)
 - [x] Valider et intégrer la reconstruction du texte pivoté des annexes (`src/extraction/rotated_tables.py`, 4 tests — cellule par cellule via `find_tables()` + tri par police/rotation, [issue #2](https://github.com/benoitdb/assistant-rag-ue/issues/2))
 - [x] Attribuer chaque tableau reconstruit à son annexe précise (`src/extraction/annexes.py`, 5 tests — titre droit ou pivoté selon l'annexe, [issue #3](https://github.com/benoitdb/assistant-rag-ue/issues/3))
-- [ ] Étendre au Décret n° 2022-608 et au guide régional choisi (corpus hétérogène, cf. cadrage §2)
+- [x] Récupérer le Décret n° 2022-608 (Légifrance bloque le scraping automatisé — Cloudflare — téléchargement manuel, committé dans `docs/sources/`)
+- [x] Extraction des 10 articles du décret (`src/extraction/decret.py`, 5 tests — structure différente du règlement UE, module dédié plutôt qu'une généralisation prématurée ; a révélé un bug dans `group_words_by_line` partagée, corrigé, [issue #4](https://github.com/benoitdb/assistant-rag-ue/issues/4))
+- [ ] Choisir et récupérer le guide méthodologique régional Île-de-France (choisi le 2026-08-19, source pas encore identifiée)
 
 ## 2. Chunking
 
@@ -50,7 +52,7 @@ GitHub sur `benoitdb/assistant-rag-ue`, pas dupliqué ici.
 
 ---
 
-**État actuel (2026-08-19)** : étape 1 bien avancée — extraction des 119
-articles, reconstruction du texte pivoté et attribution annexe/tableau
-livrées et testées (14 tests). Reste à traiter : Décret n° 2022-608 et
-guide régional choisi, avant de passer au chunking (étape 2).
+**État actuel (2026-08-19)** : étape 1 bien avancée — règlement UE (119
+articles + annexes) et Décret n° 2022-608 (10 articles) extraits et
+testés (19 tests). Reste à traiter : récupérer et extraire le guide
+régional Île-de-France, avant de passer au chunking (étape 2).
