@@ -15,11 +15,11 @@ cadrage évolue.
 
 Cadrage et choix de stack terminés (voir [ADR 0001](docs/decisions/0001-stack-technique-v1.md)
 — pas de framework RAG, Qdrant Cloud, pdfplumber, Mistral pour embeddings et
-génération, Streamlit sur Hugging Face Spaces). Extraction des 3 documents
-du corpus V1 et chunking des articles/fiches terminés (voir
-[ADR 0002](docs/decisions/0002-strategie-chunking.md)). Prochaine étape :
-indexation Qdrant. Suivi détaillé des grandes étapes (cochables) :
-[docs/roadmap.md](docs/roadmap.md).
+génération, Streamlit sur Hugging Face Spaces). Extraction, chunking (voir
+[ADR 0002](docs/decisions/0002-strategie-chunking.md)) et indexation du
+corpus V1 terminés — 278 chunks indexés dans Qdrant Cloud
+(`scripts/index_corpus.py`). Prochaine étape : retrieval. Suivi détaillé
+des grandes étapes (cochables) : [docs/roadmap.md](docs/roadmap.md).
 
 **Point de vigilance** : le LLM de génération (Mistral free tier) doit être
 testé en priorité contre les deux exigences non négociables ci-dessous —

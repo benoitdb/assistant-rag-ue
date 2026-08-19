@@ -30,9 +30,9 @@ GitHub sur `benoitdb/assistant-rag-ue`, pas dupliqué ici.
 
 ## 3. Indexation (Qdrant)
 
-- [ ] Setup Qdrant Cloud (free tier)
-- [ ] Génération des embeddings (Mistral Embed)
-- [ ] Script d'indexation + vérification (nombre de chunks, métadonnées de citation présentes)
+- [x] Setup Qdrant Cloud (free tier) — cluster + clés dans `.env` local (non committé)
+- [x] Génération des embeddings (Mistral Embed, `src/indexation/embeddings.py` — appel HTTP direct par lots de 32)
+- [x] Script d'indexation + vérification (`scripts/index_corpus.py`, `src/indexation/qdrant_index.py`, 9 tests — id de point déterministe pour idempotence, [issue #8](https://github.com/benoitdb/assistant-rag-ue/issues/8) ; 278 chunks indexés et vérifiés sur le corpus réel)
 
 ## 4. Retrieval
 
@@ -52,7 +52,7 @@ GitHub sur `benoitdb/assistant-rag-ue`, pas dupliqué ici.
 
 ---
 
-**État actuel (2026-08-19)** : étapes 1 et 2 terminées — extraction des
-3 documents du corpus V1 (règlement UE, décret, guide régional
-Centre-Val de Loire) et chunking des articles/fiches, 29 tests au vert.
-Prochaine étape : indexation Qdrant (étape 3).
+**État actuel (2026-08-19)** : étapes 1 à 3 terminées — extraction,
+chunking et indexation du corpus V1 (règlement UE, décret, guide
+régional Centre-Val de Loire), 278 chunks indexés dans Qdrant Cloud, 38
+tests au vert. Prochaine étape : retrieval (étape 4).
