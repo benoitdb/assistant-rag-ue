@@ -36,8 +36,8 @@ GitHub sur `benoitdb/assistant-rag-ue`, pas dupliqué ici.
 
 ## 4. Retrieval
 
-- [ ] Requête vectorielle + reranking éventuel
-- [ ] Mesure précision/rappel sur le jeu de questions de référence (cadrage §6, à versionner dans le repo)
+- [x] Requête vectorielle (`src/retrieval/retriever.py`) — pas de reranking en V1, cf. [issue #10](https://github.com/benoitdb/assistant-rag-ue/issues/10)
+- [x] Mesure précision/rappel sur le jeu de questions de référence (`tests/data/reference_questions.py`, 9 questions ; `tests/test_retrieval.py`, seuil de rappel 80% — mesuré à 100% au moment de l'écriture)
 
 ## 5. Génération
 
@@ -52,7 +52,9 @@ GitHub sur `benoitdb/assistant-rag-ue`, pas dupliqué ici.
 
 ---
 
-**État actuel (2026-08-19)** : étapes 1 à 3 terminées — extraction,
-chunking et indexation du corpus V1 (règlement UE, décret, guide
-régional Centre-Val de Loire), 278 chunks indexés dans Qdrant Cloud, 38
-tests au vert. Prochaine étape : retrieval (étape 4).
+**État actuel (2026-08-19)** : étapes 1 à 4 terminées — extraction,
+chunking, indexation (278 chunks dans Qdrant Cloud) et retrieval,
+rappel mesuré à 100% sur le jeu de questions de référence, 39 tests au
+vert. Prochaine étape : génération (étape 5) — priorité haute sur les
+deux exigences non négociables (citation exacte, refus explicite
+hors-corpus), cf. risque noté dans l'ADR 0001.
