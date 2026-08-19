@@ -47,14 +47,14 @@ GitHub sur `benoitdb/assistant-rag-ue`, pas dupliqué ici.
 
 ## 6. Interface (Streamlit)
 
-- [ ] Interface de question/réponse + affichage des citations sources
+- [x] Interface de question/réponse + affichage des citations sources (`app.py`, vérifié via `tests/test_app.py` (`AppTest`) et manuellement en local par l'utilisateur)
 - [ ] Déploiement Hugging Face Spaces
 
 ---
 
-**État actuel (2026-08-19)** : étapes 1 à 5 terminées — pipeline RAG
-complet de bout en bout (extraction, chunking, indexation dans Qdrant
-Cloud, retrieval, génération), 43 tests au vert. Les deux exigences non
-négociables du cadrage (citation exacte, refus explicite hors-corpus)
-sont vérifiées automatiquement contre le vrai modèle et corpus — 9/9 et
-4/4. Prochaine étape : interface Streamlit (étape 6).
+**État actuel (2026-08-19)** : pipeline RAG complet de bout en bout avec
+interface Streamlit locale fonctionnelle (`app.py`), 50 tests au vert.
+Les deux exigences non négociables du cadrage (citation exacte, refus
+explicite hors-corpus) sont vérifiées automatiquement contre le vrai
+modèle et corpus — 9/9 et 4/4. Reste : déploiement Hugging Face Spaces
+(fin de l'étape 6).
