@@ -21,7 +21,7 @@ GitHub sur `benoitdb/assistant-rag-ue`, pas dupliqué ici.
 - [x] Attribuer chaque tableau reconstruit à son annexe précise (`src/extraction/annexes.py`, 5 tests — titre droit ou pivoté selon l'annexe, [issue #3](https://github.com/benoitdb/assistant-rag-ue/issues/3))
 - [x] Récupérer le Décret n° 2022-608 (Légifrance bloque le scraping automatisé — Cloudflare — téléchargement manuel, committé dans `docs/sources/`)
 - [x] Extraction des 10 articles du décret (`src/extraction/decret.py`, 5 tests — structure différente du règlement UE, module dédié plutôt qu'une généralisation prématurée ; a révélé un bug dans `group_words_by_line` partagée, corrigé, [issue #4](https://github.com/benoitdb/assistant-rag-ue/issues/4))
-- [ ] Choisir et récupérer le guide méthodologique régional Île-de-France (choisi le 2026-08-19, source pas encore identifiée)
+- [x] Récupérer et extraire le guide régional Centre-Val de Loire (`src/extraction/guide_regional.py`, 4 tests — structure en "FICHE N°X", troisième type de document du corpus, aucun piège de mise en page détecté)
 
 ## 2. Chunking
 
@@ -52,7 +52,6 @@ GitHub sur `benoitdb/assistant-rag-ue`, pas dupliqué ici.
 
 ---
 
-**État actuel (2026-08-19)** : étape 1 bien avancée — règlement UE (119
-articles + annexes) et Décret n° 2022-608 (10 articles) extraits et
-testés (19 tests). Reste à traiter : récupérer et extraire le guide
-régional Île-de-France, avant de passer au chunking (étape 2).
+**État actuel (2026-08-19)** : étape 1 terminée — les 3 documents du
+corpus V1 (règlement UE, décret, guide régional Centre-Val de Loire)
+sont extraits et testés (23 tests). Prochaine étape : chunking (étape 2).
