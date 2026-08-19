@@ -25,8 +25,8 @@ GitHub sur `benoitdb/assistant-rag-ue`, pas dupliqué ici.
 
 ## 2. Chunking
 
-- [ ] ADR sur la stratégie de découpage précise (granularité par article, gestion des articles très longs/courts — prévu en fin d'ADR 0001)
-- [ ] Implémentation + tests
+- [x] ADR sur la stratégie de découpage précise ([ADR 0002](decisions/0002-strategie-chunking.md) — un chunk par unité extraite, découpage secondaire sur numérotation interne au-delà de 4 000 caractères, annexes hors scope V1)
+- [x] Implémentation + tests (`src/chunking/chunker.py`, 5 tests — a nécessité de corriger l'extraction de l'article 119 du règlement UE, qui engloutissait tout le texte des annexes, [issue #6](https://github.com/benoitdb/assistant-rag-ue/issues/6))
 
 ## 3. Indexation (Qdrant)
 
@@ -52,6 +52,7 @@ GitHub sur `benoitdb/assistant-rag-ue`, pas dupliqué ici.
 
 ---
 
-**État actuel (2026-08-19)** : étape 1 terminée — les 3 documents du
-corpus V1 (règlement UE, décret, guide régional Centre-Val de Loire)
-sont extraits et testés (23 tests). Prochaine étape : chunking (étape 2).
+**État actuel (2026-08-19)** : étapes 1 et 2 terminées — extraction des
+3 documents du corpus V1 (règlement UE, décret, guide régional
+Centre-Val de Loire) et chunking des articles/fiches, 29 tests au vert.
+Prochaine étape : indexation Qdrant (étape 3).
