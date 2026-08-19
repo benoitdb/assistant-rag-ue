@@ -14,12 +14,12 @@ GitHub sur `benoitdb/assistant-rag-ue`, pas dupliqué ici.
 
 ## 1. Extraction
 
-- [x] Récupérer le Règlement (UE) 2021/1060 en local (source EUR-Lex)
+- [x] Récupérer le Règlement (UE) 2021/1060 en local (source EUR-Lex, committé dans `docs/sources/`)
 - [x] Valider la stratégie de détection des articles (police italique 9.6, plus robuste qu'une regex texte — [issue #1](https://github.com/benoitdb/assistant-rag-ue/issues/1))
-- [ ] Décider du traitement des annexes à texte pivoté (52% du document, [issue #2](https://github.com/benoitdb/assistant-rag-ue/issues/2)) — bloquant tant que les annexes restent dans le périmètre
-- [ ] Écrire le script d'extraction pour de vrai (`src/`) : texte + repérage structure (Titre/Chapitre/Article) sur le corps des articles
+- [x] Extraction des 119 articles (`src/extraction/articles.py`, 5 tests, corps multi-pages géré, en-têtes de page filtrés)
+- [x] Valider la reconstruction du texte pivoté des annexes (cellule par cellule via `find_tables()` + tri par police/rotation — [issue #2](https://github.com/benoitdb/assistant-rag-ue/issues/2))
+- [ ] Intégrer la reconstruction des annexes dans un module testé (prototype validé, pas encore en code réutilisable)
 - [ ] Étendre au Décret n° 2022-608 et au guide régional choisi (corpus hétérogène, cf. cadrage §2)
-- [ ] Tests d'extraction (déterministes — cf. CLAUDE.md "tester séparément")
 
 ## 2. Chunking
 
@@ -50,7 +50,9 @@ GitHub sur `benoitdb/assistant-rag-ue`, pas dupliqué ici.
 
 ---
 
-**État actuel (2026-08-19)** : étape 1 en cours — stratégie de détection
-des articles validée, mais deux limites du corpus source découvertes en
-cours de route (voir issues #1 et #2) restent à trancher avant d'écrire
-le code d'extraction définitif.
+**État actuel (2026-08-19)** : étape 1 en cours — extraction des 119
+articles du règlement livrée et testée. Reconstruction du texte pivoté
+des annexes validée en prototype mais pas encore intégrée en code
+réutilisable ([issue #2](https://github.com/benoitdb/assistant-rag-ue/issues/2)).
+Reste à traiter : intégration annexes, puis Décret n° 2022-608 et guide
+régional.
