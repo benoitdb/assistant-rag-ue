@@ -45,23 +45,22 @@ ne pas préparer d'arborescence vide par anticipation.
 
 ## Commandes
 
-Environnement : `venv/` à la racine, dépendances épinglées dans
-`requirements.txt`. Variables requises dans `.env` (modèle `.env.example`) :
-`QDRANT_URL`, `QDRANT_API_KEY`, `MISTRAL_API_KEY`.
+Environnement : `venv/` à la racine. Dépendances applicatives épinglées dans
+`requirements.txt`, outillage de développement dans `requirements-dev.txt`
+(c'est ce dernier qu'installe la CI). Variables requises dans `.env` (modèle
+`.env.example`) : `QDRANT_URL`, `QDRANT_API_KEY`, `MISTRAL_API_KEY`.
 
-- **Tests hors réseau** (39 tests, ~2 min) — extraction, chunking, prompt :
-  ```
-  venv/bin/python -m pytest tests/ -q \
-    --ignore=tests/test_embeddings.py --ignore=tests/test_generation.py \
-    --ignore=tests/test_mistral_http.py --ignore=tests/test_retrieval.py
-  ```
-  C'est la commande par défaut pendant le développement.
-- **Suite complète** (50 tests) : `venv/bin/python -m pytest tests/ -q`
-  — **IMPORTANT** : les 11 tests exclus ci-dessus appellent réellement l'API
-  Mistral et Qdrant Cloud (choix assumé, cf. en-têtes de `test_retrieval.py` et
-  `test_generation.py`), consomment du quota free tier et exigent le corpus déjà
-  indexé. À lancer avant de fusionner une PR touchant retrieval/génération,
-  pas en boucle.
+- **Tests** : `venv/bin/python -m pytest -q` — 47 tests, ~2 min. Les 3 tests
+  marqués `reseau` sont **exclus par défaut** (`addopts` du `pyproject.toml`).
+- **Tests réseau** : `venv/bin/python -m pytest -q -m reseau` — **IMPORTANT** :
+  ces 3 tests (dans `test_generation.py` et `test_retrieval.py`) appellent
+  réellement l'API Mistral et Qdrant Cloud, consomment du quota free tier et
+  exigent le corpus déjà indexé. Ce sont eux qui vérifient les deux exigences
+  non négociables du cadrage, donc **à lancer localement avant de fusionner une
+  PR touchant le retrieval ou la génération** — la CI ne peut pas les exécuter.
+  Un nouveau test appelant le réseau doit porter ce marqueur.
+- **Lint et formatage** : `venv/bin/ruff check .` et `venv/bin/ruff format .`
+  (config dans `pyproject.toml`). Les deux tournent en CI sur chaque PR.
 - **Indexer le corpus** : `venv/bin/python scripts/index_corpus.py` (extraction →
   chunking → embeddings → indexation ; ré-indexer le même corpus fait un upsert,
   pas de doublon)

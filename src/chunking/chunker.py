@@ -100,9 +100,7 @@ def chunk_unit(
 
     marker_re = MARKER_RE_BY_TYPE[type_unite]
     lines = texte.split("\n")
-    groups = _split_on_markers(lines, marker_re) or _split_by_line_count(
-        lines, LONG_UNIT_THRESHOLD
-    )
+    groups = _split_on_markers(lines, marker_re) or _split_by_line_count(lines, LONG_UNIT_THRESHOLD)
 
     return [
         Chunk(

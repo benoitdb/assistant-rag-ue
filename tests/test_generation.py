@@ -1,22 +1,25 @@
 """Test des deux exigences non négociables du cadrage (§4) sur la
 génération réelle : citation exacte de la source, et refus explicite
 sur le hors-corpus plutôt qu'une invention.
-
 Test d'intégration réel (Mistral + Qdrant Cloud, pas de mock) — c'est
 justement la fiabilité du LLM free tier sur ces deux consignes qui est
 le risque identifié dans l'ADR 0001, pas mesurable avec des réponses
 simulées. Nécessite `.env` rempli et le corpus déjà indexé.
 """
 
+import pytest
 from dotenv import load_dotenv
 
 load_dotenv()
 
+from data.reference_questions import HORS_CORPUS_QUESTIONS, REFERENCE_QUESTIONS  # noqa: E402
 from generation.generator import DOCUMENT_LABELS, REFUS_HORS_CORPUS, generate_answer  # noqa: E402
 from indexation.qdrant_index import get_client  # noqa: E402
 from retrieval.retriever import search  # noqa: E402
 
-from data.reference_questions import HORS_CORPUS_QUESTIONS, REFERENCE_QUESTIONS  # noqa: E402
+# Tests d'intégration réels : consomment du quota Mistral/Qdrant et exigent le
+# corpus indexé. Exclus par défaut (pyproject.toml), lancés par `pytest -m reseau`.
+pytestmark = pytest.mark.reseau
 
 TOP_K = 5
 

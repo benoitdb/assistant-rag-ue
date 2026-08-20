@@ -1,0 +1,37 @@
+name: CI
+
+# Rend exécutable la règle du CLAUDE.md : « une PR n'est pas prête à fusionner
+# tant que les tests concernés ne sont pas au vert ». Sans CI, cette règle ne
+# repose que sur la bonne volonté de celui qui ouvre la PR.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  qualite:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Installer les dépendances
+        run: pip install -r requirements-dev.txt
+
+      - name: Lint
+        run: ruff check .
+
+      - name: Formatage
+        run: ruff format --check .
+
+      # Les tests marqués `reseau` sont exclus par défaut (addopts du
+      # pyproject.toml) : ils appellent réellement Mistral et Qdrant Cloud, ce
+      # qui exigerait des secrets et consommerait du quota free tier à chaque
+      # push. Ils restent à lancer localement (`pytest -m reseau`) avant de
+      # fusionner une PR touchant le retrieval ou la génération.
+      - name: Tests
+        run: pytest -q

@@ -24,9 +24,7 @@ def test_trouve_les_10_articles(pdf):
 
 def test_article_premier_corps_du_texte(articles):
     article_1 = next(a for a in articles if a.numero == 1)
-    assert article_1.texte.startswith(
-        "Conformément à l’article 63.1 du règlement (UE) 2021/1060"
-    )
+    assert article_1.texte.startswith("Conformément à l’article 63.1 du règlement (UE) 2021/1060")
     assert "période 2021-2027" in article_1.texte
 
 

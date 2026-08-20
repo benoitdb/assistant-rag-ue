@@ -61,7 +61,7 @@ def index_chunks(client: QdrantClient, chunks: list[Chunk], vectors: list[list[f
 
     points = [
         PointStruct(id=chunk_point_id(chunk), vector=vector, payload=chunk_payload(chunk))
-        for chunk, vector in zip(chunks, vectors)
+        for chunk, vector in zip(chunks, vectors, strict=True)
     ]
     client.upsert(collection_name=COLLECTION_NAME, points=points)
     return len(points)
