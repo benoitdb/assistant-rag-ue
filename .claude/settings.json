@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(venv/bin/python -m pytest:*)",
+      "Bash(venv/bin/pytest:*)",
+      "Bash(venv/bin/ruff:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git checkout:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(gh pr:*)",
+      "Bash(gh issue:*)",
+      "Bash(gh run:*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // .tool_response.filePath' | { read -r f; case \"$f\" in *.py) \"${CLAUDE_PROJECT_DIR:-.}/venv/bin/ruff\" format \"$f\" && \"${CLAUDE_PROJECT_DIR:-.}/venv/bin/ruff\" check --fix \"$f\";; esac; } 2>/dev/null || true",
+            "statusMessage": "ruff format + check --fix"
+          }
+        ]
+      }
+    ]
+  }
+}
