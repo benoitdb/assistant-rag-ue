@@ -48,13 +48,16 @@ GitHub sur `benoitdb/assistant-rag-ue`, pas dupliqué ici.
 ## 6. Interface (Streamlit)
 
 - [x] Interface de question/réponse + affichage des citations sources (`app.py`, vérifié via `tests/test_app.py` (`AppTest`) et manuellement en local par l'utilisateur)
-- [ ] Déploiement Hugging Face Spaces
+- [ ] Déploiement Hugging Face Spaces — code déployé (SDK Docker, cf. issue #17), bloqué en attente du support HF sur un bug de quota côté plateforme (issue #18), rien à faire côté code
 
 ---
 
-**État actuel (2026-08-19)** : pipeline RAG complet de bout en bout avec
-interface Streamlit locale fonctionnelle (`app.py`), 50 tests au vert.
-Les deux exigences non négociables du cadrage (citation exacte, refus
-explicite hors-corpus) sont vérifiées automatiquement contre le vrai
-modèle et corpus — 9/9 et 4/4. Reste : déploiement Hugging Face Spaces
-(fin de l'étape 6).
+**État actuel (2026-08-20)** : pipeline RAG complet de bout en bout,
+50 tests au vert. Les deux exigences non négociables du cadrage
+(citation exacte, refus explicite hors-corpus) sont vérifiées
+automatiquement contre le vrai modèle et corpus — 9/9 et 4/4. Interface
+Streamlit déployée sur Hugging Face Spaces (`benoitdb/assistant-rag-ue`,
+SDK Docker) mais **bloquée par un bug de quota côté plateforme HF**
+(issue #18, ticket support envoyé le 2026-08-20) — le projet est
+fonctionnellement terminé, en attente d'une réponse du support HF pour
+que le Space démarre effectivement.
