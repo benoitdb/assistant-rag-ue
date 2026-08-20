@@ -43,6 +43,33 @@ voir le risque documenté dans l'ADR 0001.
 Structure de code à ajouter au fur et à mesure (`src/`, `tests/`, etc.) —
 ne pas préparer d'arborescence vide par anticipation.
 
+## Commandes
+
+Environnement : `venv/` à la racine, dépendances épinglées dans
+`requirements.txt`. Variables requises dans `.env` (modèle `.env.example`) :
+`QDRANT_URL`, `QDRANT_API_KEY`, `MISTRAL_API_KEY`.
+
+- **Tests hors réseau** (39 tests, ~2 min) — extraction, chunking, prompt :
+  ```
+  venv/bin/python -m pytest tests/ -q \
+    --ignore=tests/test_embeddings.py --ignore=tests/test_generation.py \
+    --ignore=tests/test_mistral_http.py --ignore=tests/test_retrieval.py
+  ```
+  C'est la commande par défaut pendant le développement.
+- **Suite complète** (50 tests) : `venv/bin/python -m pytest tests/ -q`
+  — **IMPORTANT** : les 11 tests exclus ci-dessus appellent réellement l'API
+  Mistral et Qdrant Cloud (choix assumé, cf. en-têtes de `test_retrieval.py` et
+  `test_generation.py`), consomment du quota free tier et exigent le corpus déjà
+  indexé. À lancer avant de fusionner une PR touchant retrieval/génération,
+  pas en boucle.
+- **Indexer le corpus** : `venv/bin/python scripts/index_corpus.py` (extraction →
+  chunking → embeddings → indexation ; ré-indexer le même corpus fait un upsert,
+  pas de doublon)
+- **Lancer l'app** : `venv/bin/streamlit run app.py --server.port 8502`
+  (8501 est occupé par le dashboard Cartographie FESI)
+- **Déploiement** : `Dockerfile` (Hugging Face Spaces, SDK Docker, port 7860
+  imposé par la plateforme — ne pas changer)
+
 ## Comment travailler ici
 
 **Langue** : français dans le code (docs, commentaires, noms de variables
@@ -95,75 +122,3 @@ laisser diverger code et doc.
 **Sujets sensibles** : réglementation fonds européens = fiabilité critique.
 Toujours positionner l'outil comme aide, jamais comme source faisant foi
 (cf. cadrage §7).
-
-## Directives comportementales générales
-
-Behavioral guidelines to reduce common LLM coding mistakes. Merge with
-project-specific instructions as needed.
-
-**Tradeoff:** These guidelines bias toward caution over speed. For
-trivial tasks, use judgment.
-
-### 1. Think Before Coding
-
-**Don't assume. Don't hide confusion. Surface tradeoffs.**
-
-Before implementing:
-- State your assumptions explicitly. If uncertain, ask.
-- If multiple interpretations exist, present them - don't pick silently.
-- If a simpler approach exists, say so. Push back when warranted.
-- If something is unclear, stop. Name what's confusing. Ask.
-
-### 2. Simplicity First
-
-**Minimum code that solves the problem. Nothing speculative.**
-
-- No features beyond what was asked.
-- No abstractions for single-use code.
-- No "flexibility" or "configurability" that wasn't requested.
-- No error handling for impossible scenarios.
-- If you write 200 lines and it could be 50, rewrite it.
-
-Ask yourself: "Would a senior engineer say this is overcomplicated?" If
-yes, simplify.
-
-### 3. Surgical Changes
-
-**Touch only what you must. Clean up only your own mess.**
-
-When editing existing code:
-- Don't "improve" adjacent code, comments, or formatting.
-- Don't refactor things that aren't broken.
-- Match existing style, even if you'd do it differently.
-- If you notice unrelated dead code, mention it - don't delete it.
-
-When your changes create orphans:
-- Remove imports/variables/functions that YOUR changes made unused.
-- Don't remove pre-existing dead code unless asked.
-
-The test: Every changed line should trace directly to the user's request.
-
-### 4. Goal-Driven Execution
-
-**Define success criteria. Loop until verified.**
-
-Transform tasks into verifiable goals:
-- "Add validation" → "Write tests for invalid inputs, then make them pass"
-- "Fix the bug" → "Write a test that reproduces it, then make it pass"
-- "Refactor X" → "Ensure tests pass before and after"
-
-For multi-step tasks, state a brief plan:
-```
-1. [Step] → verify: [check]
-2. [Step] → verify: [check]
-3. [Step] → verify: [check]
-```
-
-Strong success criteria let you loop independently. Weak criteria ("make
-it work") require constant clarification.
-
----
-
-**These guidelines are working if:** fewer unnecessary changes in
-diffs, fewer rewrites due to overcomplication, and clarifying questions
-come before implementation rather than after mistakes.
