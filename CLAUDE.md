@@ -50,11 +50,11 @@ Environnement : `venv/` à la racine. Dépendances applicatives épinglées dans
 (c'est ce dernier qu'installe la CI). Variables requises dans `.env` (modèle
 `.env.example`) : `QDRANT_URL`, `QDRANT_API_KEY`, `MISTRAL_API_KEY`.
 
-- **Tests** : `venv/bin/python -m pytest -q` — 47 tests, ~2 min. Les 3 tests
+- **Tests** : `venv/bin/python -m pytest -q` — 45 tests, ~2 min. Les 5 tests
   marqués `reseau` sont **exclus par défaut** (`addopts` du `pyproject.toml`).
 - **Tests réseau** : `venv/bin/python -m pytest -q -m reseau` — **IMPORTANT** :
-  ces 3 tests (dans `test_generation.py` et `test_retrieval.py`) appellent
-  réellement l'API Mistral et Qdrant Cloud, consomment du quota free tier et
+  ces 5 tests (dans `test_app.py`, `test_generation.py` et `test_retrieval.py`)
+  appellent réellement l'API Mistral et Qdrant Cloud, consomment du quota et
   exigent le corpus déjà indexé. Ce sont eux qui vérifient les deux exigences
   non négociables du cadrage, donc **à lancer localement avant de fusionner une
   PR touchant le retrieval ou la génération** — la CI ne peut pas les exécuter.

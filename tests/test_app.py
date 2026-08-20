@@ -7,7 +7,13 @@ c'est le comportement de bout en bout (saisie -> retrieval -> génération
 
 from pathlib import Path
 
+import pytest
 from streamlit.testing.v1 import AppTest
+
+# `app.py` construit un client Qdrant au chargement : ces tests consomment du
+# quota Mistral/Qdrant et exigent le corpus indexé, comme test_retrieval.py.
+# Exclus par défaut (pyproject.toml), lancés par `pytest -m reseau`.
+pytestmark = pytest.mark.reseau
 
 APP_PATH = Path(__file__).resolve().parent.parent / "app.py"
 
