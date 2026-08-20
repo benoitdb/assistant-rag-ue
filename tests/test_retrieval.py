@@ -1,5 +1,4 @@
 """Mesure du retrieval sur le jeu de questions de référence (cadrage §6).
-
 Test d'intégration réel : hits l'API Mistral (embedding de la question)
 et Qdrant Cloud (recherche vectorielle) plutôt que des mocks — le
 retrieval est précisément la brique qui ne peut pas être validée
@@ -14,14 +13,18 @@ plutôt que d'exiger un score parfait à chaque exécution (variabilité
 possible du modèle d'embedding).
 """
 
+import pytest
 from dotenv import load_dotenv
 
 load_dotenv()
 
+from data.reference_questions import REFERENCE_QUESTIONS  # noqa: E402
 from indexation.qdrant_index import get_client  # noqa: E402
 from retrieval.retriever import search  # noqa: E402
 
-from data.reference_questions import REFERENCE_QUESTIONS  # noqa: E402
+# Tests d'intégration réels : consomment du quota Mistral/Qdrant et exigent le
+# corpus indexé. Exclus par défaut (pyproject.toml), lancés par `pytest -m reseau`.
+pytestmark = pytest.mark.reseau
 
 TOP_K = 5
 MINIMUM_RECALL = 0.8
@@ -49,6 +52,5 @@ def test_rappel_sur_le_jeu_de_questions_de_reference():
 
     recall = hits / len(REFERENCE_QUESTIONS)
     assert recall >= MINIMUM_RECALL, (
-        f"rappel {recall:.0%} sous le seuil de {MINIMUM_RECALL:.0%} — "
-        f"questions manquées : {echecs}"
+        f"rappel {recall:.0%} sous le seuil de {MINIMUM_RECALL:.0%} — questions manquées : {echecs}"
     )

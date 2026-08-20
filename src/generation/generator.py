@@ -23,9 +23,7 @@ DOCUMENT_LABELS = {
     "guide_regional_centre_val_de_loire": "Guide du porteur de projet — Centre-Val de Loire",
 }
 
-REFUS_HORS_CORPUS = (
-    "Je ne sais pas : cette question n'est pas couverte par les documents fournis."
-)
+REFUS_HORS_CORPUS = "Je ne sais pas : cette question n'est pas couverte par les documents fournis."
 
 SYSTEM_PROMPT = f"""Tu es un assistant documentaire sur la réglementation des fonds \
 européens de cohésion (FEDER, FSE+), utilisé en aide à l'instruction et à l'audit. \
@@ -67,9 +65,7 @@ def format_context(chunks: list[RetrievedChunk]) -> str:
     return "\n\n".join(parts)
 
 
-def generate_answer(
-    question: str, chunks: list[RetrievedChunk], api_key: str | None = None
-) -> str:
+def generate_answer(question: str, chunks: list[RetrievedChunk], api_key: str | None = None) -> str:
     api_key = api_key or os.environ["MISTRAL_API_KEY"]
     headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
     context = format_context(chunks)

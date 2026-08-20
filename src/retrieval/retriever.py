@@ -33,9 +33,7 @@ class RetrievedChunk:
 
 def search(client: QdrantClient, question: str, top_k: int = 5) -> list[RetrievedChunk]:
     vector = embed_texts([question])[0]
-    results = client.query_points(
-        collection_name=COLLECTION_NAME, query=vector, limit=top_k
-    ).points
+    results = client.query_points(collection_name=COLLECTION_NAME, query=vector, limit=top_k).points
 
     return [
         RetrievedChunk(

@@ -1,0 +1,42 @@
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+exclude = ["venv"]
+
+[tool.ruff.lint]
+# Défaut de ruff (E4/E7/E9 + F) plus :
+#   I    tri des imports
+#   UP   modernisation de syntaxe pour la version cible
+#   B    pièges courants (bugbear)
+#   RUF  règles propres à ruff, dont RUF100 qui signale les `# noqa` devenus inutiles
+select = ["E4", "E7", "E9", "F", "I", "UP", "B", "RUF"]
+# RUF001/002/003 signalent les caractères Unicode « ambigus » : ici ce sont les
+# apostrophes typographiques et espaces insécables du français, présentes à
+# dessein dans les textes affichés et les docstrings. Projet francophone assumé.
+ignore = ["RUF001", "RUF002", "RUF003"]
+
+[tool.ruff.lint.isort]
+# `src/` est ajouté au sys.path par conftest.py et app.py, pas installé comme
+# paquet — sans cette liste, ruff classerait ces modules en dépendances tierces.
+known-first-party = [
+    "chunking",
+    "conftest",
+    "data",
+    "extraction",
+    "generation",
+    "indexation",
+    "mistral_http",
+    "retrieval",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Les tests marqués `reseau` appellent réellement l'API Mistral et Qdrant Cloud
+# (choix assumé, cf. ADR 0001 : la fiabilité du LLM free tier n'est pas mesurable
+# avec des mocks). Ils consomment du quota free tier et exigent le corpus indexé,
+# donc ils sont exclus par défaut — `pytest -m reseau` pour les lancer
+# explicitement. Voir issue #19.
+addopts = "-m 'not reseau'"
+markers = [
+    "reseau: test d'intégration réel appelant Mistral et/ou Qdrant Cloud (consomme du quota)",
+]

@@ -154,9 +154,7 @@ def extract_articles(pdf_path: str) -> list[Article]:
         for i, heading in enumerate(headings):
             next_heading = headings[i + 1] if i + 1 < len(headings) else None
             if next_heading is None and annexe_start is not None:
-                next_heading = ArticleHeading(
-                    page=annexe_start[0], top=annexe_start[1], numero=-1
-                )
+                next_heading = ArticleHeading(page=annexe_start[0], top=annexe_start[1], numero=-1)
             lines = _collect_lines_between(pdf, heading, next_heading)
 
             # la ligne "Article X" elle-même est la première ligne collectée

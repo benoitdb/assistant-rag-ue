@@ -29,9 +29,7 @@ def test_reussit_sans_retry_si_la_premiere_reponse_est_ok(monkeypatch):
 def test_reessaie_sur_503_puis_reussit(monkeypatch):
     statuses = iter([503, 503, 200])
     monkeypatch.setattr("mistral_http.time.sleep", lambda _: None)
-    monkeypatch.setattr(
-        "mistral_http.requests.post", lambda *a, **k: FakeResponse(next(statuses))
-    )
+    monkeypatch.setattr("mistral_http.requests.post", lambda *a, **k: FakeResponse(next(statuses)))
 
     response = post_with_retry("https://example.test")
 

@@ -60,7 +60,7 @@ def test_index_chunks_upsert_un_point_par_chunk_avec_le_bon_vecteur():
     count = index_chunks(client, chunks, vectors)
 
     assert count == 2
-    collection_name, points = client.upserted[0]
+    _collection_name, points = client.upserted[0]
     assert len(points) == 2
     assert [p.vector for p in points] == vectors
 
