@@ -24,7 +24,9 @@ Projet fonctionnellement terminé. Interface Streamlit déployée sur
 Hugging Face Spaces (SDK Docker, cf. issue #17) mais bloquée par un bug
 de quota côté plateforme HF (issue #18, ticket support envoyé,
 pas d'urgence à relancer). Suivi détaillé des grandes
-étapes (cochables) : [docs/roadmap.md](docs/roadmap.md).
+étapes (cochables) : [docs/roadmap.md](docs/roadmap.md). Extensions
+envisagées (nouvelles sources, pas commencées) :
+[docs/roadmap-v2.md](docs/roadmap-v2.md).
 
 **Point de vigilance** : le LLM de génération (Mistral free tier) doit être
 testé en priorité contre les deux exigences non négociables ci-dessous —

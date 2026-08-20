@@ -5,7 +5,8 @@ pour obtenir un POC de bout en bout. Chaque étape est cochée une fois
 livrée et testée (pas juste "commencée") — voir cadrage §6 pour les
 critères de succès attendus à la fin. Détail des décisions et des
 gotchas rencontrés en cours de route : [ADR](decisions/) et issues
-GitHub sur `benoitdb/assistant-rag-ue`, pas dupliqué ici.
+GitHub sur `benoitdb/assistant-rag-ue`, pas dupliqué ici. Extensions
+envisagées au-delà de ce périmètre V1 : [roadmap-v2.md](roadmap-v2.md).
 
 ## 0. Cadrage
 
