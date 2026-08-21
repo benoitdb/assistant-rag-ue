@@ -65,9 +65,16 @@ Environnement : `venv/` à la racine. Dépendances applicatives épinglées dans
   et `test_guide_regional.py`, qui parsent des PDF et pèsent à eux seuls 80 % des
   140 s. Lancés automatiquement par le hook `Stop`
   (`.claude/hooks/tests-rapides.sh`) dès qu'un `.py` est modifié — un tour ne peut
-  pas se clore dessus s'ils échouent. **C'est un détecteur de fumée, pas le
-  gardien** : l'extraction des 119 articles n'y est pas couverte, c'est la CI qui
-  vérifie tout au moment du merge.
+  pas se clore dessus s'ils échouent.
+- **Tests lents** (10 tests, ~135 s) : `test_articles.py` et
+  `test_guide_regional.py`, qui parsent des PDF. Lancés **en tâche de fond** par
+  un second hook `Stop` (`.claude/hooks/tests-lents.sh`) : le tour se clôt sans
+  attendre, et Claude n'est réveillé qu'en cas d'échec. Journal des exécutions
+  dans `/tmp/claude-tests-lents.log` — un succès est autrement invisible.
+
+Les deux hooks se partagent la suite hors réseau **sans recouvrement** (35 + 10 =
+45). La CI reste le gardien : elle seule tourne dans un environnement sans `.env`
+ni cache local, et elle seule décide de la fusion.
 - **Indexer le corpus** : `venv/bin/python scripts/index_corpus.py` (extraction →
   chunking → embeddings → indexation ; ré-indexer le même corpus fait un upsert,
   pas de doublon)

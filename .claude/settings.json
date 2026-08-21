@@ -38,6 +38,13 @@
             "command": "\"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/tests-rapides.sh\"",
             "timeout": 120,
             "statusMessage": "tests rapides"
+          },
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/tests-lents.sh\"",
+            "timeout": 300,
+            "asyncRewake": true,
+            "statusMessage": "tests lents (arrière-plan)"
           }
         ]
       }
