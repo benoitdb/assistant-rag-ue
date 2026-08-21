@@ -37,8 +37,11 @@ voir le risque documenté dans l'ADR 0001.
 - `cadrage-projet5-rag-reglementaire.md` — document de cadrage de référence
 - `docs/decisions/` — ADR (Architecture Decision Records), un fichier par
   décision structurante (ex. choix du vector store, stratégie de chunking)
-- `.claude/skills/` — procédures répétées une fois qu'elles existent
-  (ex. procédure d'ingestion d'un nouveau document, checklist de review)
+- `.claude/skills/ingerer-document/` — procédure complète d'ajout d'un document
+  au corpus (`/ingerer-document`). Invocation manuelle : elle écrit dans Qdrant
+  et consomme du quota. Chargée à la demande, pas à chaque session.
+- `.claude/hooks/` — scripts des hooks `Stop` (tests rapides bloquants, tests
+  lents en tâche de fond), branchés dans `.claude/settings.json`
 
 Structure de code à ajouter au fur et à mesure (`src/`, `tests/`, etc.) —
 ne pas préparer d'arborescence vide par anticipation.
