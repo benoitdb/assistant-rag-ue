@@ -61,6 +61,13 @@ Environnement : `venv/` à la racine. Dépendances applicatives épinglées dans
   Un nouveau test appelant le réseau doit porter ce marqueur.
 - **Lint et formatage** : `venv/bin/ruff check .` et `venv/bin/ruff format .`
   (config dans `pyproject.toml`). Les deux tournent en CI sur chaque PR.
+- **Tests rapides** (35 tests, 7 s) : la suite ci-dessus moins `test_articles.py`
+  et `test_guide_regional.py`, qui parsent des PDF et pèsent à eux seuls 80 % des
+  140 s. Lancés automatiquement par le hook `Stop`
+  (`.claude/hooks/tests-rapides.sh`) dès qu'un `.py` est modifié — un tour ne peut
+  pas se clore dessus s'ils échouent. **C'est un détecteur de fumée, pas le
+  gardien** : l'extraction des 119 articles n'y est pas couverte, c'est la CI qui
+  vérifie tout au moment du merge.
 - **Indexer le corpus** : `venv/bin/python scripts/index_corpus.py` (extraction →
   chunking → embeddings → indexation ; ré-indexer le même corpus fait un upsert,
   pas de doublon)
