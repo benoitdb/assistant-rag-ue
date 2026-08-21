@@ -29,6 +29,18 @@
           }
         ]
       }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/tests-rapides.sh\"",
+            "timeout": 120,
+            "statusMessage": "tests rapides"
+          }
+        ]
+      }
     ]
   }
 }
