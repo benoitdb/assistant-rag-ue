@@ -25,14 +25,22 @@ assumé, pas subi. Aucun rafraîchissement automatique n'est en place, et la mis
 à jour de ce fichier se fait quand il y a une raison de le faire.
 
 **Ce qui a été vérifié pour la consultation** (2026-08-22) : les `robots.txt`
-d'EUR-Lex et de Légifrance ont été lus avant toute consultation automatisée,
-comme l'exige l'issue #21 — vérifier plutôt que supposer.
+d'EUR-Lex, de Légifrance et d'europe-en-france ont été lus avant toute
+consultation automatisée, comme l'exige l'issue #21 — vérifier plutôt que
+supposer.
 
 - **EUR-Lex** autorise les pages `/legal-content/...` et impose un
   `Crawl-delay: 10` ; il interdit notamment `/legal-content/*/TXT/DOC/`,
   `/print-pdf`, `/export-documents` et `/download-notice`. Les consultations
   ci-dessous ont porté sur les pages HTML autorisées, espacées en conséquence.
-- **Légifrance** n'interdit que `/download/`.
+- **Légifrance** n'interdit que `/download/`, et ne déclare pas de
+  `Crawl-delay`.
+- **europe-en-france** impose un `Crawl-delay: 10` et interdit `/recherche/`
+  ainsi que, par la règle `Disallow: *?`, **toute URL portant des paramètres**.
+  Conséquence directe et non contournée : la pagination de la liste des
+  ressources réglementaires passe par `?page=`, donc seule la page 1 (25 des
+  51 entrées) a été consultée. Les 26 restantes demandent une récupération
+  manuelle — c'est le mode par défaut assumé, pas un pis-aller.
 
 Ces constats datent eux aussi : les revérifier avant toute nouvelle campagne de
 consultation, et **à plus forte raison** avant d'envisager un rafraîchissement
@@ -65,17 +73,77 @@ Sous-ensemble déjà arbitré du référentiel, repris de
 | Guide administratif et financier FSE+ 2021-2027 | *(document d'accompagnement)* | — | **Non vérifié** — signalé au cadrage comme mis à jour régulièrement, donc un statut daté y sera particulièrement volatil | *à fournir* | — |
 | Guide ANCT instruments financiers | *(document d'accompagnement)* | — | **Non vérifié** | *à fournir* | — |
 
+## Règlements spécifiques par fonds
+
+Relevés depuis la page « [Règlements européens 2021-2027](https://www.europe-en-france.gouv.fr/fr/ressources/reglements-europeens-2021-2027) »
+d'europe-en-france, **statuts constatés sur EUR-Lex**. Le portail national dit
+quels textes existent ; il ne dit pas s'ils sont en vigueur.
+
+| Intitulé | Référence | Date | Statut | Source | Constaté le |
+|---|---|---|---|---|---|
+| Règlement relatif au Fonds européen de développement régional et au Fonds de cohésion | Règlement (UE) 2021/1058 | 24/06/2021 | **En vigueur, modifié** — version consolidée en vigueur au 20/09/2025 (versions antérieures : 30/06/2021, 01/03/2024, 24/12/2024) | [EUR-Lex, CELEX 32021R1058](https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX%3A32021R1058) · ELI `http://data.europa.eu/eli/reg/2021/1058/oj` | 2026-08-22 |
+| Règlement établissant le Fonds pour une transition juste (FTJ) | Règlement (UE) 2021/1056 | 24/06/2021 | **En vigueur, modifié** — version consolidée en vigueur au 20/09/2025 (versions antérieures : 30/06/2021, 01/03/2024) | [EUR-Lex, CELEX 32021R1056](https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX%3A32021R1056) · ELI `http://data.europa.eu/eli/reg/2021/1056/oj` | 2026-08-22 |
+| Règlement portant dispositions particulières relatives à l'objectif « Coopération territoriale européenne » (Interreg) soutenu par le FEDER et les instruments de financement extérieur | Règlement (UE) 2021/1059 | 24/06/2021 | **En vigueur, non modifié** — une seule version consolidée, 30/06/2021 (JO L 231 du 30/06/2021, p. 94-158) | [EUR-Lex, CELEX 32021R1059](https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX%3A32021R1059) · ELI `http://data.europa.eu/eli/reg/2021/1059/oj` | 2026-08-22 |
+
+> **Le Fonds de cohésion n'a pas de règlement propre** : il est régi par le
+> 2021/1058, conjointement avec le FEDER — l'intitulé officiel relevé sur
+> EUR-Lex le nomme explicitement. La page d'europe-en-france étiquette ce
+> règlement « FEDER » seulement ; c'est le titre à la source qui fait foi.
+
+> **Piège d'ingestion, avant qu'il ne se referme** : europe-en-france héberge
+> ces cinq règlements en PDF sous `/sites/default/files/`, mais ce sont les
+> versions **du JO de juillet 2021**, pas les consolidées. Ingérer depuis cette
+> source reproduirait l'[issue #26](https://github.com/benoitdb/assistant-rag-ue/issues/26)
+> sur cinq textes au lieu d'un. Commodité de téléchargement n'est pas fraîcheur
+> du texte.
+
+## Textes nationaux d'application
+
+Constatés sur Légifrance. Aucun n'est acquis ni indexé.
+
+| Intitulé | Référence | Date | Statut | Source | Constaté le |
+|---|---|---|---|---|---|
+| Décret relatif à la gestion des programmes européens de la politique de cohésion et de la pêche et des affaires maritimes pour la période 2021-2027 | Décret n° 2021-1884 | 29/12/2021 (JORF n° 0303 du 30/12/2021) | **En vigueur** — aucune modification signalée (dernière mise à jour des données : 31/12/2021) | [Légifrance, JORFTEXT000044615064](https://www.legifrance.gouv.fr/loda/id/JORFTEXT000044615064) | 2026-08-22 |
+| Décret relatif à l'autorité nationale pour les programmes de coopération territoriale européenne pour la période 2021-2027 | Décret n° 2022-579 | 19/04/2022 | **En vigueur** — aucune modification signalée (dernière mise à jour des données : 22/04/2022) | [Légifrance, JORFTEXT000045614686](https://www.legifrance.gouv.fr/loda/id/JORFTEXT000045614686) | 2026-08-22 |
+| Décret relatif au comité national Etat-régions et au comité Etat-région régional pour la période 2021-2027 des programmes européens de la politique de cohésion et de la pêche et des affaires maritimes et la période 2023-2027 de la politique de développement rural | Décret n° 2022-580 | 20/04/2022 | **En vigueur, modifié** — articles 1 et 2 modifiés par le décret n° 2022-1051 du 28/07/2022 (dernière mise à jour des données : 30/07/2022) | [Légifrance, JORFTEXT000045614693](https://www.legifrance.gouv.fr/loda/id/JORFTEXT000045614693) | 2026-08-22 |
+| Décret relatif à la mise en œuvre des programmes européens de la politique de cohésion, de la pêche et des affaires maritimes, et des migrations et des affaires intérieures pour la période 2021-2027 | Décret n° 2022-713 | 27/04/2022 | **En vigueur** — aucune modification signalée (dernière mise à jour des données : 23/11/2023) | [Légifrance, JORFTEXT000045684059](https://www.legifrance.gouv.fr/loda/id/JORFTEXT000045684059) | 2026-08-22 |
+| Arrêté portant désignation des préfets coordonnateurs pour les programmes de coopération territoriale européenne transfrontaliers, transnationaux et régions ultrapériphériques pour la période 2021-2027 | Arrêté du 15/02/2022 (NOR PRMG2202115A) | 15/02/2022 (JORF n° 0040 du 17/02/2022) | **Version initiale** — aucune version ultérieure publiée | [Légifrance, JORFTEXT000045180944](https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000045180944) | 2026-08-22 |
+| Accord de partenariat France 2021-2027 (FEDER, FSE+, FTJ, FEAMPA) | *(pas une norme — document de programmation adopté par la Commission)* | Adopté le 02/06/2022 | **Adopté** — exemplaire publié par europe-en-france le 24/06/2022 ; aucune version ultérieure repérée sur ce portail | [europe-en-france, `ap_fr_version_adoptee_020622.pdf`](https://www.europe-en-france.gouv.fr/sites/default/files/ap_fr_version_adoptee_020622.pdf) | 2026-08-22 |
+
+> **Deux constats que cette passe a produits**, et qui justifient la colonne
+> « Constaté le » mieux qu'un argument :
+>
+> 1. Le décret n° 2022-580 **a été modifié** en juillet 2022. Une liste sans
+>    date l'aurait présenté comme intact pendant quatre ans.
+> 2. Son intitulé réel, relevé sur Légifrance, couvre aussi la politique de
+>    développement rural 2023-2027 — ce que le libellé abrégé du portail
+>    national ne laissait pas voir.
+>
+> **Et un rappel de méthode payé comptant** : le lien du portail national vers
+> le décret n° 2021-1884 pointait vers `JORFTEXT000045180944`, qui est en
+> réalité l'arrêté du 15 février 2022. Le bon identifiant
+> (`JORFTEXT000044615064`) a été retrouvé en parcourant le JORF du 30/12/2021.
+> Une source officielle peut se tromper de lien : c'est le texte à l'arrivée
+> qu'il faut lire, pas le lien au départ.
+
 ## À compléter
 
 L'inventaire ne prétend pas être exhaustif à ce stade. Manquent notamment, et
 volontairement tant que leurs références ne sont pas fournies ou vérifiées :
 
-- les **règlements spécifiques par fonds** autres que le FSE+ — FEDER et Fonds
-  de cohésion, FTJ — cités par le RPDC mais non encore relevés ici ;
+- les **26 entrées non consultées** de la liste des ressources réglementaires
+  d'europe-en-france (pages 2 et 3 sur 3) : inaccessibles par la règle
+  `Disallow: *?` du portail, elles attendent une récupération manuelle. C'est
+  la lacune la plus grande et la plus facile à combler ;
 - les **actes délégués et d'exécution** pris sur le fondement du RPDC ;
-- les **textes nationaux** autres que le décret n° 2022-608 (arrêtés,
-  instructions, circulaires) ;
-- les **guides régionaux** au-delà de Centre-Val de Loire.
+- les **instructions et circulaires** nationales — les décrets et l'arrêté
+  recensés ci-dessus ne couvrent pas la doctrine d'application ;
+- les **guides régionaux** au-delà de Centre-Val de Loire ;
+- les **régimes d'aides d'État** (lignes directrices, *de minimis*, exemptions
+  sectorielles) : présents en nombre sur le portail national, ils touchent
+  l'éligibilité des dépenses sans être propres aux fonds de cohésion — leur
+  inclusion dans le référentiel est un arbitrage de périmètre à trancher, pas
+  un simple relevé.
 
 **Méthode pour ajouter une ligne** : partir de la source officielle (EUR-Lex,
 Légifrance, portail de l'autorité de gestion), relever l'intitulé complet tel
