@@ -128,6 +128,25 @@ Constatés sur Légifrance. Aucun n'est acquis ni indexé.
 > Une source officielle peut se tromper de lien : c'est le texte à l'arrivée
 > qu'il faut lire, pas le lien au départ.
 
+## Programmation 2014-2020 — les deux prédécesseurs directs
+
+Retenus à titre **comparatif** (cf. [roadmap-v2.md §4](roadmap-v2.md)) parce
+qu'ils sont les prédécesseurs exacts des deux textes normatifs du corpus
+indexé : le 1303/2013 précède le RPDC 2021/1060, le décret 2016-279 précède
+le décret 2022-608. Le reste du bloc 2014-2020 du portail national n'est pas
+repris — voir « À compléter ».
+
+| Intitulé | Référence | Date | Statut | Source | Constaté le |
+|---|---|---|---|---|---|
+| Règlement portant dispositions communes relatives au FEDER, au FSE, au Fonds de cohésion, au FEADER et au FEAMP | Règlement (UE) n° 1303/2013 | 17/12/2013 | **En vigueur, modifié** — version consolidée en vigueur au 01/03/2024. Toujours en vigueur malgré la fin de la période de programmation | [EUR-Lex, CELEX 32013R1303](https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX%3A32013R1303) · ELI `http://data.europa.eu/eli/reg/2013/1303/oj` | 2026-08-22 |
+| Décret fixant les règles nationales d'éligibilité des dépenses dans le cadre des programmes soutenus par les fonds structurels et d'investissement européens pour la période 2014-2020 | Décret n° 2016-279 | 08/03/2016 (JORF n° 0059 du 10/03/2016) | **En vigueur, modifié** — notamment par le décret n° 2019-225 du 22/03/2019 (dernière mise à jour des données : 25/03/2019) | [Légifrance, JORFTEXT000032174265](https://www.legifrance.gouv.fr/loda/id/JORFTEXT000032174265) | 2026-08-22 |
+
+> **Contre-intuitif, et c'est pour cela que c'est écrit** : ces deux textes de
+> la période 2014-2020 sont **toujours en vigueur** en 2026. Une période de
+> programmation close ne signifie pas des textes abrogés — les opérations en
+> cours de clôture continuent d'en relever. Supposer l'inverse aurait produit
+> deux lignes fausses.
+
 ## Ce que le portail national contient, et ne contient pas
 
 Les 51 ressources réglementaires d'europe-en-france ont été parcourues en
@@ -140,13 +159,19 @@ arrêté du 15/02/2022, et la page « Règlements européens 2021-2027 ». Aucun
 texte de la programmation en cours ne manque à l'inventaire du fait de ce
 portail.
 
-Les 26 autres entrées relèvent de deux ensembles hors périmètre V1 : le
-**droit des aides d'État** (RGEC 651/2014, règlements *de minimis* 1407/2013,
-1408/2013, 717/2014, 360/2012, règlements de procédure 659/1999, 2015/1589,
-régime SA.39252, communications de la Commission) et la **programmation
-2014-2020** (règlement 1303/2013, décret n° 2016-279 sur l'éligibilité des
-dépenses, cadre national de développement rural, charte graphique). Leur
-inclusion est un arbitrage de périmètre, pas un relevé — voir « À compléter ».
+Les 26 autres entrées relèvent de deux ensembles hors périmètre V1, et
+l'arbitrage a été tranché différemment pour chacun :
+
+- le **droit des aides d'État** (RGEC 651/2014, règlements *de minimis*
+  1407/2013, 1408/2013, 717/2014, 360/2012, règlements de procédure 659/1999
+  et 2015/1589, régime SA.39252, communications de la Commission) — **écarté**
+  de l'inventaire : ces textes débordent les fonds de cohésion et forment un
+  champ à eux seuls. Décision de périmètre, pas oubli ;
+- la **programmation 2014-2020** — **deux textes retenus** à titre comparatif,
+  le règlement 1303/2013 et le décret n° 2016-279 (section précédente), parce
+  qu'ils précèdent directement les deux textes normatifs du corpus indexé. Le
+  reste du bloc (cadre national de développement rural, cadre de suivi PAC,
+  charte graphique, stratégie de communication Europ'Act) n'est pas repris.
 
 > **Le portail illustre involontairement la thèse de ce document.** Plusieurs
 > de ses fiches affichent une date de fin déjà passée sans que le statut soit
@@ -162,12 +187,15 @@ volontairement tant que leurs références ne sont pas fournies ou vérifiées :
 - les **actes délégués et d'exécution** pris sur le fondement du RPDC ;
 - les **instructions et circulaires** nationales — les décrets et l'arrêté
   recensés ci-dessus ne couvrent pas la doctrine d'application ;
-- les **guides régionaux** au-delà de Centre-Val de Loire ;
-- les **régimes d'aides d'État** (lignes directrices, *de minimis*, exemptions
-  sectorielles) : présents en nombre sur le portail national, ils touchent
-  l'éligibilité des dépenses sans être propres aux fonds de cohésion — leur
-  inclusion dans le référentiel est un arbitrage de périmètre à trancher, pas
-  un simple relevé.
+- les **guides régionaux** au-delà de Centre-Val de Loire.
+
+**Hors périmètre, par décision et non par omission** : le droit des aides
+d'État (lignes directrices, *de minimis*, exemptions sectorielles, régimes
+notifiés) et le reste de la programmation 2014-2020. Ces textes touchent
+l'éligibilité des dépenses sans être propres aux fonds de cohésion ; les
+recenser reviendrait à ouvrir un second référentiel. Si ce choix est
+réexaminé un jour, le portail national en recense une vingtaine, listés à la
+section précédente — le point de départ existe.
 
 **Méthode pour ajouter une ligne** : partir de la source officielle (EUR-Lex,
 Légifrance, portail de l'autorité de gestion), relever l'intitulé complet tel
