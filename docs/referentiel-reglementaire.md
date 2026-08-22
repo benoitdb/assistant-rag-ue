@@ -37,10 +37,12 @@ supposer.
   `Crawl-delay`.
 - **europe-en-france** impose un `Crawl-delay: 10` et interdit `/recherche/`
   ainsi que, par la règle `Disallow: *?`, **toute URL portant des paramètres**.
-  Conséquence directe et non contournée : la pagination de la liste des
-  ressources réglementaires passe par `?page=`, donc seule la page 1 (25 des
-  51 entrées) a été consultée. Les 26 restantes demandent une récupération
-  manuelle — c'est le mode par défaut assumé, pas un pis-aller.
+  La pagination de la liste des ressources réglementaires passant par `?page=`,
+  seule la page 1 (25 des 51 entrées) était consultable automatiquement. Le
+  blocage n'a pas été contourné : les pages 2 et 3 ont été **récupérées à la
+  main** (2026-08-22), ce qui est le mode par défaut assumé de cet inventaire.
+  Le sitemap, voie autorisée essayée d'abord, n'expose qu'une poignée de
+  `/fr/ressources/` et ne remplaçait pas la pagination.
 
 Ces constats datent eux aussi : les revérifier avant toute nouvelle campagne de
 consultation, et **à plus forte raison** avant d'envisager un rafraîchissement
@@ -126,15 +128,37 @@ Constatés sur Légifrance. Aucun n'est acquis ni indexé.
 > Une source officielle peut se tromper de lien : c'est le texte à l'arrivée
 > qu'il faut lire, pas le lien au départ.
 
+## Ce que le portail national contient, et ne contient pas
+
+Les 51 ressources réglementaires d'europe-en-france ont été parcourues en
+entier (2026-08-22). Répartition constatée, d'après les propres facettes du
+portail : 20 taguées « Aides d'État », 10 « 2014-2020 », **8 « 2021-2027 »**.
+
+**Les 8 entrées 2021-2027 sont toutes recensées ci-dessus** — Accord de
+partenariat, décrets 2021-1884 / 2022-579 / 2022-580 / 2022-608 / 2022-713,
+arrêté du 15/02/2022, et la page « Règlements européens 2021-2027 ». Aucun
+texte de la programmation en cours ne manque à l'inventaire du fait de ce
+portail.
+
+Les 26 autres entrées relèvent de deux ensembles hors périmètre V1 : le
+**droit des aides d'État** (RGEC 651/2014, règlements *de minimis* 1407/2013,
+1408/2013, 717/2014, 360/2012, règlements de procédure 659/1999, 2015/1589,
+régime SA.39252, communications de la Commission) et la **programmation
+2014-2020** (règlement 1303/2013, décret n° 2016-279 sur l'éligibilité des
+dépenses, cadre national de développement rural, charte graphique). Leur
+inclusion est un arbitrage de périmètre, pas un relevé — voir « À compléter ».
+
+> **Le portail illustre involontairement la thèse de ce document.** Plusieurs
+> de ses fiches affichent une date de fin déjà passée sans que le statut soit
+> signalé comme périmé : « Date de fin : 31/12/2018 » pour le règlement
+> 360/2012, « 31/12/2020 » pour les règlements 1408/2013 et 717/2014. Une
+> liste sans date de constat vieillit en silence ; c'est visible ici à l'œil nu.
+
 ## À compléter
 
 L'inventaire ne prétend pas être exhaustif à ce stade. Manquent notamment, et
 volontairement tant que leurs références ne sont pas fournies ou vérifiées :
 
-- les **26 entrées non consultées** de la liste des ressources réglementaires
-  d'europe-en-france (pages 2 et 3 sur 3) : inaccessibles par la règle
-  `Disallow: *?` du portail, elles attendent une récupération manuelle. C'est
-  la lacune la plus grande et la plus facile à combler ;
 - les **actes délégués et d'exécution** pris sur le fondement du RPDC ;
 - les **instructions et circulaires** nationales — les décrets et l'arrêté
   recensés ci-dessus ne couvrent pas la doctrine d'application ;
