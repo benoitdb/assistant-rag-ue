@@ -37,6 +37,11 @@ voir le risque documenté dans l'ADR 0001.
 - `cadrage-projet5-rag-reglementaire.md` — document de cadrage de référence
 - `docs/decisions/` — ADR (Architecture Decision Records), un fichier par
   décision structurante (ex. choix du vector store, stratégie de chunking)
+- `docs/referentiel-reglementaire.md` — inventaire des textes du champ :
+  référence, statut **daté**, source officielle. Savoir qu'un texte existe n'est
+  pas décider de l'indexer : l'arbitrage d'ingestion se fait texte par texte
+  (roadmap-v2). Chaque statut y est une photographie datée — le corriger suppose
+  de le reconstater, pas de le supposer stable.
 - `.claude/skills/ingerer-document/` — procédure complète d'ajout d'un document
   au corpus (`/ingerer-document`). Invocation manuelle : elle écrit dans Qdrant
   et consomme du quota. Chargée à la demande, pas à chaque session.

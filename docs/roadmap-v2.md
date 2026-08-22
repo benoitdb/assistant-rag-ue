@@ -10,6 +10,12 @@ planifiées dans le temps — pas de code commencé sur ce périmètre.
 
 ## 0. Sources identifiées mais pas encore acquises
 
+Le statut et la source de chacun de ces documents sont tenus à jour dans
+l'inventaire du référentiel réglementaire
+([referentiel-reglementaire.md](referentiel-reglementaire.md), issue #21) —
+cette section garde la trace de l'**arbitrage** (quoi acquérir, pourquoi),
+l'inventaire porte les **faits** (référence exacte, statut daté, URL).
+
 Trois documents apparaissent dans le tableau "Corpus et sources" du
 cadrage (§2) mais étaient explicitement hors périmètre V1 (§1) :
 
