@@ -1,5 +1,9 @@
 # Assistant RAG réglementaire — fonds européens (Projet 5)
 
+Instructions du projet, communes à tous les assistants de code (Claude Code,
+Codex) — source unique. `CLAUDE.md` l'importe et ne garde que ce qui est propre
+à Claude Code (hooks, skill).
+
 ## Pourquoi
 
 Assistant documentaire qui répond en langage naturel sur la réglementation
@@ -42,14 +46,10 @@ voir le risque documenté dans l'ADR 0001.
   pas décider de l'indexer : l'arbitrage d'ingestion se fait texte par texte
   (roadmap-v2). Chaque statut y est une photographie datée — le corriger suppose
   de le reconstater, pas de le supposer stable.
-- `.claude/skills/ingerer-document/` — procédure complète d'ajout d'un document
-  au corpus (`/ingerer-document`). Invocation manuelle : elle écrit dans Qdrant
-  et consomme du quota. Chargée à la demande, pas à chaque session.
-- `.claude/hooks/` — scripts des hooks `Stop` (tests rapides bloquants, tests
-  lents en tâche de fond), branchés dans `.claude/settings.json`
-
-Structure de code à ajouter au fur et à mesure (`src/`, `tests/`, etc.) —
-ne pas préparer d'arborescence vide par anticipation.
+- `.claude/skills/ingerer-document/SKILL.md` — procédure complète d'ajout d'un
+  document au corpus, dans l'ordre. Écrite comme skill Claude Code, elle se lit
+  comme une procédure par tout outil. Elle écrit dans Qdrant et consomme du
+  quota : ne jamais la dérouler sans demande explicite.
 
 ## Commandes
 
@@ -71,18 +71,14 @@ Environnement : `venv/` à la racine. Dépendances applicatives épinglées dans
   (config dans `pyproject.toml`). Les deux tournent en CI sur chaque PR.
 - **Tests rapides** (35 tests, 7 s) : la suite ci-dessus moins `test_articles.py`
   et `test_guide_regional.py`, qui parsent des PDF et pèsent à eux seuls 80 % des
-  140 s. Lancés automatiquement par le hook `Stop`
-  (`.claude/hooks/tests-rapides.sh`) dès qu'un `.py` est modifié — un tour ne peut
-  pas se clore dessus s'ils échouent.
+  140 s : `venv/bin/python -m pytest -q --ignore=tests/test_articles.py
+  --ignore=tests/test_guide_regional.py`.
 - **Tests lents** (10 tests, ~135 s) : `test_articles.py` et
-  `test_guide_regional.py`, qui parsent des PDF. Lancés **en tâche de fond** par
-  un second hook `Stop` (`.claude/hooks/tests-lents.sh`) : le tour se clôt sans
-  attendre, et Claude n'est réveillé qu'en cas d'échec. Journal des exécutions
-  dans `/tmp/claude-tests-lents.log` — un succès est autrement invisible.
+  `test_guide_regional.py`, qui parsent des PDF :
+  `venv/bin/python -m pytest -q tests/test_articles.py tests/test_guide_regional.py`.
 
-Les deux hooks se partagent la suite hors réseau **sans recouvrement** (35 + 10 =
-45). La CI reste le gardien : elle seule tourne dans un environnement sans `.env`
-ni cache local, et elle seule décide de la fusion.
+Les deux lots se partagent la suite hors réseau **sans recouvrement** (35 + 10 =
+45). La CI décide de la fusion.
 - **Indexer le corpus** : `venv/bin/python scripts/index_corpus.py` (extraction →
   chunking → embeddings → indexation ; ré-indexer le même corpus fait un upsert,
   pas de doublon)
@@ -102,10 +98,8 @@ métier) comme dans les échanges, cohérent avec le cadrage.
 - Ces deux points sont les critères de succès du POC : toute évolution du
   pipeline doit être testée contre eux avant d'être considérée terminée
 
-**Qualité et TDD** :
-- Un pipeline RAG se casse silencieusement (mauvais chunk récupéré, citation
-  fausse, hallucination) — écrire les tests avant ou en même temps que le
-  code, pas après
+**Tests** : un pipeline RAG se casse silencieusement (mauvais chunk récupéré,
+citation fausse, hallucination) — les tests s'écrivent avec le code.
 - Jeu de questions-réponses de référence (issu du cadrage §6) versionné dans
   le repo et exécuté comme suite de tests, pas comme vérification manuelle
   ponctuelle
@@ -113,32 +107,17 @@ métier) comme dans les échanges, cohérent avec le cadrage.
   retrieval (mesurable par précision/rappel sur le jeu de questions),
   génération (nécessite les deux garde-fous ci-dessus)
 
-**Décisions d'architecture** : toute décision structurante (vector store,
-framework d'orchestration, stratégie de chunking, hébergement) va dans
-`docs/decisions/` sous forme d'ADR courte (contexte, options, choix, pourquoi).
-Ne pas laisser ces choix implicites dans le code ou dans une conversation.
+**Décisions d'architecture** : ADR courtes dans `docs/decisions/` (contexte,
+options, choix, pourquoi) — vector store, framework d'orchestration, stratégie de
+chunking, hébergement.
 
-**GitHub issues — AI-driven dev, pas du vibe-coding** : toute limitation
-connue, gotcha, idée d'évolution, ou choix technique non trivial pris de
-façon autonome (algorithme/lib retenu, seuil choisi, approche préférée à une
-alternative) est loggé comme issue GitHub sur `benoitdb/assistant-rag-ue`
-(ou commentaire sur une issue liée existante) — par défaut, sans attendre
-que ça soit demandé. Objectif : que l'utilisateur reste le décideur qui peut
-toujours expliquer et ré-arbitrer un choix plus tard (entretien, revue de
-projet), pas qu'il découvre après coup ce qui a été fait. Un ADR documente
-une décision d'architecture retenue ; une issue GitHub trace une piste
-ouverte, une limite connue, ou un choix d'implémentation ponctuel.
+**PR** : branches `feat/...`, `fix/...`. Une PR qui touche l'extraction, le
+chunking, le retrieval ou la génération n'est pas prête à fusionner sans test
+qui couvre le changement.
 
-**Branches et tests** : travail non trivial sur une branche dédiée
-(`feat/...`, `fix/...`), fusionnée dans `main` via PR une fois les tests
-concernés au vert — pas de commit direct sur `main` pour du code (les
-corrections de doc/typo peuvent aller directement sur `main`). Une PR sans
-test qui couvre le changement n'est pas prête à fusionner tant que le code
-touche à l'extraction, au chunking, au retrieval ou à la génération.
-
-**Documentation** : le cadrage reste la source de vérité sur le périmètre.
-Si l'implémentation s'en écarte, mettre à jour le cadrage plutôt que de
-laisser diverger code et doc.
+**Périmètre** : le cadrage fait foi. Un écart entre l'implémentation et le
+cadrage est signalé (issue) et arbitré par l'utilisateur, jamais réglé en
+silence, ni en retouchant le code ni en retouchant le cadrage.
 
 **Sujets sensibles** : réglementation fonds européens = fiabilité critique.
 Toujours positionner l'outil comme aide, jamais comme source faisant foi
